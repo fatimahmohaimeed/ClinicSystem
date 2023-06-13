@@ -22,35 +22,130 @@ namespace ClinicSystemTest.Controllers
             this.context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index1()
         {
-            List<Appointment> appointments = context.Appointments
-           .Include(c => c.Doctor)
-           .Include(c => c.Patient)
-           .ToList();
+            var appointments = context.Appointments;
 
 
-            return View(appointments);
+            List<ListAllAppointment> appointmentList = new List<ListAllAppointment>();
+            foreach (var apoin in appointments)
+            {
+
+                appointmentList.Add(new ListAllAppointment
+                {
+                    AppId = apoin.AppointmentId,
+                    Data = apoin.AppointmentDate,
+                    Time = apoin.AppointmentTime,
+                    Price = apoin.AppointmentPrice,
+                    DoctorId = apoin.DoctorId,
+                    //PatientId = apoin.PatientId,
+                    IsReserved = context.Patients.Any(a => a.Id == apoin.PatientId)
+                });
+            }
+            return View(appointmentList);
+
         }
 
 
 
 
-        public async Task<IActionResult> Index1(int id, bool isReserved, Appointment appointment)
+        public async Task<IActionResult> book(int id, bool isReserved)
+        {
+            var user = userManager.GetUserId(User);
+            if (user == null)
+            {
+                return RedirectToAction("Index1");
+            }
+            if (isReserved == false)
+            {
+                var appointm = context.Appointments.FirstOrDefault(a => a.AppointmentId == id);
+                var pation = context.Patients.FirstOrDefault(x => x.PatientUserId == user);
+                appointm.PatientId = pation.Id;
+                context.SaveChanges();
+            }
+            else
+            {
+                var appointm = context.Appointments.FirstOrDefault(a => a.AppointmentId == id);
+                var pation = context.Patients.FirstOrDefault(x => x.PatientUserId == user);
+                appointm.PatientId = pation.Id;
+                context.Remove(appointm.PatientId);
+                context.SaveChanges();
+            }
+
+            return RedirectToAction("Index1");
+        }
+
+
+
+
+
+        //public async Task<IActionResult> book(int id)
+        //{
+        //    var user = userManager.GetUserId(User);
+        //    if (user == null)
+        //    {
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    var appointm = context.Appointments.FirstOrDefault(a => a.AppointmentId == id);
+        //    var pation = context.Patients.FirstOrDefault(x => x.PatientUserId == user);
+        //    appointm.PatientId = pation.Id;
+        //    context.SaveChanges();
+
+        //    return RedirectToAction("Index");
+        //}
+
+
+        // -------------------------------------------------------------------------------------------------
+        //public async Task<IActionResult> Index1()
+        //{
+        //    List<Appointment> appointments = context.Appointments
+        //   .Include(c => c.Doctor)
+        //   .Include(c => c.Patient)
+        //   .ToList();
+        //    return View(appointments);
+        //}
+
+        //public async Task<IActionResult> book(int id)
+        //{
+        //    var user = userManager.GetUserId(User);
+        //    if (user == null)
+        //    {
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    var appointm = context.Appointments.FirstOrDefault(a => a.AppointmentId == id);
+        //    var pation = context.Patients.FirstOrDefault(x => x.PatientUserId == user);
+        //    appointm.PatientId = pation.Id;
+        //    context.SaveChanges();
+
+        //    return RedirectToAction("Index");
+        //}
+
+        // -------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+        /*public async Task<IActionResult> Index1(int id, bool isReserved, Appointment appointment)
         {
             var user = userManager.GetUserId(User);
             if (user == null)
             {
                 return RedirectToAction("Index");
             }
-            
-            var appointm = context.Appointments.FirstOrDefault();
-            var patients = context.Patients.ToList();
+
+            var appointm = context.Appointments.FirstOrDefaultAsync(a=>a.AppointmentId == id);
+            var pation = context.Patients.FirstOrDefaultAsync(x => x.PatientUserId == user);
 
 
-            foreach (var pation in patients)
-            {
-                if (user == pation.PatientUserId && appointm.AppointmentId == id)
+
+                if (pation != null && appointm != null)
                 {
                     Appointment patient = new Appointment()
                     {
@@ -66,18 +161,13 @@ namespace ClinicSystemTest.Controllers
                     context.SaveChanges();
 
                 }
-            }
-            return View(appointm);
-        }
 
-    //                    if (user == pation.PatientUserId && appointm. == id)
-    //            {
-
-    //                var x = context.Appointments.Where(a => appointment.AppointmentId == id).ToList();
-    //}
+            return RedirectToAction("Index");
+        }*/
 
 
-    [HttpGet]
+
+        [HttpGet]
         public IActionResult AddProfile()
         {
             return View();

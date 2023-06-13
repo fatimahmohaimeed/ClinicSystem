@@ -1,12 +1,19 @@
 ﻿@model IEnumerable<ClinicSystemTest.Entities.Appointment>
-<h1>Appointments List</h1>
 
+@{
+    ViewData["Title"] = "View";
+}
 
+<h1>View</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>
-             <th>
-            @Html.DisplayNameFor(model => model.AppointmentDate)
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentDate)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.AppointmentTime)
@@ -20,36 +27,44 @@
             <th>
                 @Html.DisplayNameFor(model => model.Patient)
             </th>
-            <th>
-                Action
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                 <td>
-                     @Html.DisplayFor(modelItem => item.AppointmentDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AppointmentTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AppointmentPrice)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Doctor.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Patient.Name)
-                </td>
-                <td>
-                    @*                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                *@                    @Html.ActionLink("Delete", "Delete", new { id=item.AppointmentId})
-                </td>
-            </tr>
-        }
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppointmentDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppointmentTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppointmentPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Doctor.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Patient.Id)
+            </td>
+            <td>
+@*                    <form method="post" asp-action="book" asp-route-id="@item.AppointmentId" asp-route-isReserved="@item.IS">
+                        @if (item.IsFollower)
+                        {
+                            <input class="button" type="submit" value="Un Follow" />
+                        }
+                        else
+                        {
+                            <input class="button" type="submit" value="Follow" />
+                        }
+                    </form>*@
+
+                <a asp-action="Edit" asp-route-id="@item.AppointmentId">Edit</a> |
+                <a asp-action="book" asp-route-id="@item.AppointmentId">book</a>
+                <a asp-action="Delete" asp-route-id="@item.AppointmentId">Delete</a>
+            </td>
+        </tr>
+}
     </tbody>
 </table>

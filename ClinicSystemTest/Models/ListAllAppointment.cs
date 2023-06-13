@@ -4,17 +4,20 @@ namespace ClinicSystemTest.Models
 {
     public class ListAllAppointment
     {
-        public int Id { get; set; }
-        public DateTime Date { get; set; }
+        public bool IsReserved { get; set; }
+
+        public int AppId { get; set; }
+        public DateTime Data { get; set; }
         public DateTime Time { get; set; }
+        public decimal Price { get; set; }
+        public int DoctorId { get; set; }
+        public int PatientId { get; set; }
+
         public string DoctorName { get; set; }
-        
+        public string PatientName { get; set; }
 
 
 
-        public Appointment Appointment { get; set; }
-
-        public Doctor doctor { get; set; }
 
 
     }
