@@ -1,0 +1,41 @@
+﻿@model ClinicSystemTest.Models.AddDoctorViewModel
+
+@{
+    ViewData["Title"] = "AddDoctor";
+}
+
+<h1>AddDoctor</h1>
+
+<h4>AddDoctor</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddDoctor">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="doctor.Name" class="control-label"></label>
+                <input asp-for="doctor.Name" class="form-control" />
+                <span asp-validation-for="doctor.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="doctor.Description"></label>
+                <input asp-for="doctor.Description" class="form-control"></input>
+            </div>
+            <div class="form-group">
+                <label asp-for="doctor.DepartmentId"></label>
+                <select asp-for="doctor.DepartmentId" class="form-control" asp-items="@Model.Departments"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="doctor.DoctorUserId"></label>
+                <select asp-for="doctor.DoctorUserId" class="form-control" asp-items="@Model.Users"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

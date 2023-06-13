@@ -1,0 +1,38 @@
+﻿@model IEnumerable<ClinicSystemTest.Models.ListViewModel>
+
+@{
+    ViewData["Title"] = "GetRoles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>List of User</h1>
+<p>
+    <a asp-action="CreateRole">CreateRole</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Roles)
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>@String.Join(" , ", item.Roles.ToList())</td>
+                <td><a class="btn btn-primary" asp-action="AssigningRole" asp-controller="Admin" asp-route-userId="@item.Id">Manage Roles</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,43 @@
+﻿@model ClinicSystemTest.Models.CreateAppointmentViewModel
+
+@{
+    ViewData["Title"] = "AddAppointment";
+}
+
+<h1>AddAppointment</h1>
+
+<h4>AddAppointment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddAppointment">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="appointment.AppointmentDate" class="control-label"></label>
+                <input asp-for="appointment.AppointmentDate" class="form-control" />
+                <span asp-validation-for="appointment.AppointmentDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="appointment.AppointmentTime"></label>
+                <input asp-for="appointment.AppointmentTime" class="form-control"></input>
+            </div>
+            <div class="form-group">
+                <label asp-for="appointment.AppointmentPrice"></label>
+                <input asp-for="appointment.AppointmentPrice" class="form-control"></input>
+            </div>
+            <div class="form-group">
+                <label asp-for="appointment.DoctorId"></label>
+                <select asp-for="appointment.DoctorId" class="form-control" asp-items="@Model.Doctors"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<label>@ViewBag.AppointmentNum</label>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
