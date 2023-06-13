@@ -36,45 +36,48 @@ namespace ClinicSystemTest.Controllers
 
 
 
-        //public async Task<IActionResult> Index(int id, bool isReserved, Appointment appointment)
-        //{
-        //    var user = userManager.GetUserId(User);
-        //    if (user == null)
-        //    {
-        //        return RedirectToAction("Index");
-        //    }
-        //    var appointm = context.Appointments.Where(a=> a.AppointmentId == id).ToList();
-        //    var patients = context.Patients.ToList();
+        public async Task<IActionResult> Index1(int id, bool isReserved, Appointment appointment)
+        {
+            var user = userManager.GetUserId(User);
+            if (user == null)
+            {
+                return RedirectToAction("Index");
+            }
+            
+            var appointm = context.Appointments.FirstOrDefault();
+            var patients = context.Patients.ToList();
 
 
-        //    //foreach(var pation in patients)
-        //    //{
-        //    //    var x= context.Appointments.Where(a => appointment.AppointmentId == id).Where()
-        //    //}
+            foreach (var pation in patients)
+            {
+                if (user == pation.PatientUserId && appointm.AppointmentId == id)
+                {
+                    Appointment patient = new Appointment()
+                    {
+                        AppointmentId = id,
+                        AppointmentDate = appointment.AppointmentDate,
+                        AppointmentTime = appointment.AppointmentTime,
+                        AppointmentPrice = appointment.AppointmentPrice,
+                        DoctorId = appointment.DoctorId,
+                        PatientId = pation.Id
+
+                    };
+                    context.Appointments.Add(patient);
+                    context.SaveChanges();
+
+                }
+            }
+            return View(appointm);
+        }
+
+    //                    if (user == pation.PatientUserId && appointm. == id)
+    //            {
+
+    //                var x = context.Appointments.Where(a => appointment.AppointmentId == id).ToList();
+    //}
 
 
-        //    Appointment patient = new Appointment()
-        //    {
-        //        AppointmentId = id,
-        //        AppointmentDate = appointment.AppointmentDate,
-        //        AppointmentTime = appointment.AppointmentTime,
-        //        AppointmentPrice = appointment.AppointmentPrice,
-        //        DoctorId = appointment.DoctorId,
-        //        //PatientId = ,
-
-               
-        //    };
-        //    context.Patients.Add(patient);
-        //    context.SaveChanges();
-
-        //}
-
-
-
-
-
-
-        [HttpGet]
+    [HttpGet]
         public IActionResult AddProfile()
         {
             return View();

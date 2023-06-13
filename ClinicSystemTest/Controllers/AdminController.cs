@@ -222,9 +222,6 @@ namespace ClinicSystemTest.Controllers
 
         #endregion
 
-        #region Add Patient
-
-        #endregion
 
         #region Add Appointment
         [HttpGet]
