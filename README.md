@@ -30,4 +30,6 @@ _______________________
 2. List all appointments 
 3. He can book an appointment and delete it
 
+_________________________________________
+** How to run project **
 
