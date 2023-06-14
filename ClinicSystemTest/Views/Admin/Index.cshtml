@@ -6,7 +6,7 @@
 
 <h1>Admin Dashboard</h1>
 <p>
-    <a asp-action="AddAppointment">Add appointment</a>
+    <a asp-action="ListDepartments">List Department</a> || <a asp-action="ListDoctors">List Doctor</a> || <a asp-action="AddAppointment">Add Appointment</a>
 </p>
 <table class="table">
     <thead>
@@ -41,25 +41,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.AppointmentPrice)
             </td>
-@*            <td>
-                @Html.DisplayFor(modelItem => item.Doctor.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Patient.Name)
-            </td>*@
-@*                <td>
-                    @Html.DisplayFor(modelItem => item.Doctor)
-                </td>*@
-@*                <td>
-                    @Html.DisplayFor(modelItem => item.Doctor.Id)
-                </td>*@
                 <td>
-                    @Html.DisplayFor(modelItem => item.DoctorId)
+                    @Html.DisplayFor(modelItem => item.Doctor.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Patient.Name)
                 </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.AppointmentId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.AppointmentId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AppointmentId">Delete</a>
+                    <a asp-action="DeleteAppointment" asp-route-id="@item.AppointmentId">Delete</a>
             </td>
         </tr>
 }

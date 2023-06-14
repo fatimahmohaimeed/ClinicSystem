@@ -1,4 +1,5 @@
 ﻿using ClinicSystemTest.Data;
+using ClinicSystemTest.Entities;
 using ClinicSystemTest.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -21,42 +22,47 @@ namespace ClinicSystemTest.Controllers
             this.userManager = userManager;
             this.context = context;
         }
-        //public IActionResult Index()
-        //{
-        //    var user = userManager.GetUserId(User);
-        //    return View();
-        //}
         
         public IActionResult Index()
         {
-            var userId = userManager.GetUserId(User);
-            if (userId.IsNullOrEmpty())//ceck it is not null
+            try
             {
-                return RedirectToAction("Index");
-            }
-            var appointments = context.Appointments;
-            var doctors = context.Doctors.ToList();
-
-            List<ListDoctorAppointment> doctorAppointmentlIST = new List<ListDoctorAppointment>();
-            foreach (var appointment in appointments)
-            {
-                foreach(var doctor in doctors)
+                var userId = userManager.GetUserId(User);
+                if (userId.IsNullOrEmpty())//ceck it is not null
                 {
-                    var doctorAppointment = new ListDoctorAppointment
-                    {
-                        Id = appointment.AppointmentId,
-                        Date = appointment.AppointmentDate,
-                        IsAppointment = context.Appointments.Any(a => a.DoctorId == doctor.Id && doctor.DoctorUserId == userId),
-                    };
-
-                    doctorAppointmentlIST.Add(doctorAppointment);
+                    return RedirectToAction("Index");
                 }
+                var doctor = context.Doctors.FirstOrDefault(d => d.DoctorUserId == userId);
+                var appointments = context.Appointments
+                    .Where(a => a.DoctorId == doctor.Id)
+                    .Include(d=>d.Doctor)
+                    .Include(p=>p.Patient)
+                    .ToList();
+                return View(appointments);
+            }catch (Exception ex)
+            {
+                return View(ex.Message.ToString());
             }
-            return View(doctorAppointmentlIST);
+
         }
 
+        #region Delete Appointmen
+        public IActionResult DeleteAppointment(int id)
+        {
+            try
+            {
+                var appointment = context.Appointments.FirstOrDefault(a => a.AppointmentId == id);
+                context.Appointments.Remove(appointment);
+                context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                return View(ex.Message.ToString());
+            }
+        }
 
-
+        #endregion
 
     }
 }

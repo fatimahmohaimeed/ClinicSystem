@@ -5,13 +5,12 @@
 }
 
 <h1>AddAppointment</h1>
-
-<h4>AddAppointment</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="AddAppointment">
 
+        <label>@ViewBag.AppointmentNum</label>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="appointment.AppointmentDate" class="control-label"></label>
@@ -37,7 +36,6 @@
         </form>
     </div>
 </div>
-<label>@ViewBag.AppointmentNum</label>
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

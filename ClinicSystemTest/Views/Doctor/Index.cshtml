@@ -1,28 +1,54 @@
-﻿@model IEnumerable<ClinicSystemTest.Models.ListDoctorAppointment>
+﻿@model IEnumerable<ClinicSystemTest.Entities.Appointment>
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>List Appointment</h1>
-
+<h1>List your appointments</h1>
 
 <table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Doctor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Patient)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            if (item.IsAppointment)
-            {
-                <tr>
-                    <td>
-                        <a asp-action="OtherUserProfile" asp-route-id="@item.Id">@item.Date</a>
-                        @*                @Html.DisplayFor(modelItem => item.Email)
-                *@
-                    </td>
-                </tr>
-            }
-
-        }
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppointmentDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppointmentTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppointmentPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Doctor.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Patient.Name)
+            </td>
+            <td>
+                    <a asp-controller="Doctor" asp-action="DeleteAppointment" asp-route-id="@item.AppointmentId">Delete</a>
+            </td>
+        </tr>
+}
     </tbody>
 </table>

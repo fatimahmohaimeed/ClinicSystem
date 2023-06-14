@@ -1,70 +1,61 @@
-﻿@model IEnumerable<ClinicSystemTest.Entities.Appointment>
+﻿@model IEnumerable<ClinicSystemTest.Models.ListAllAppointment>
 
 @{
-    ViewData["Title"] = "View";
+    ViewData["Title"] = "Index1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>View</h1>
+<h1>List of User</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.AppointmentDate)
+                @Html.DisplayNameFor(model => model.Data)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AppointmentTime)
+                @Html.DisplayNameFor(model => model.Time)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AppointmentPrice)
+                @Html.DisplayNameFor(model => model.Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Doctor)
+                @Html.DisplayNameFor(model => model.DoctorId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Patient)
+                Action
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.AppointmentDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AppointmentTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AppointmentPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Doctor.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Patient.Id)
-            </td>
-            <td>
-@*                    <form method="post" asp-action="book" asp-route-id="@item.AppointmentId" asp-route-isReserved="@item.IS">
-                        @if (item.IsFollower)
-                        {
-                            <input class="button" type="submit" value="Un Follow" />
-                        }
-                        else
-                        {
-                            <input class="button" type="submit" value="Follow" />
-                        }
-                    </form>*@
-
-                <a asp-action="Edit" asp-route-id="@item.AppointmentId">Edit</a> |
-                <a asp-action="book" asp-route-id="@item.AppointmentId">book</a>
-                <a asp-action="Delete" asp-route-id="@item.AppointmentId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DoctorId)
+                </td>
+                <td>
+                     <form method="post" asp-action="book" asp-route-id="@item.AppId" asp-route-isReserved="@item.IsReserved">
+                    @if (item.IsReserved)
+                    {
+                    <input class="button" type="submit" value="Un Book" />
+                    }
+                    else
+                    {
+                    <input class="button" type="submit" value="Book" />
+                    }
+                    </form>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

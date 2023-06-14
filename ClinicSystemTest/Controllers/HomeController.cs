@@ -28,5 +28,14 @@ namespace ClinicSystemTest.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+        #region Valdiation error page
+        public IActionResult ValdiationErrorr()
+        {
+            return View();
+        }
+
+        #endregion
     }
 }
