@@ -1,5 +1,4 @@
-# Clinic System
-### ASP.NET Core Web App MVC
+# Clinic System ASP.NET Core Web App MVC
 ## Functionality in system
 - Register & Logout & Login
 - Admin Dashboard 
