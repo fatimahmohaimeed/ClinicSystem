@@ -5,8 +5,7 @@
 - Doctor Dashboard
 - Patient Dashboard
 
-### Clinic System
-- There is 3 role in the system 
+#### There is 3 role in the system 
 - Admin 
 - Doctor
 - Patient
@@ -31,5 +30,5 @@ _______________________
 3. He can book an appointment and delete it
 
 _________________________________________
-** How to run project **
+
 
