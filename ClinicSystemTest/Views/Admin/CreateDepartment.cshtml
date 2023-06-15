@@ -4,7 +4,7 @@
     ViewData["Title"] = "CreateDepartment";
 }
 
-<h1>CreateDepartment</h1>
+<h1>Create Department</h1>
 
 <hr />
 <div class="row">
@@ -15,15 +15,15 @@
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
+            </div>&nbsp;
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-info" />
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="ListDepartments">Back to List</a>
-</div>
+&nbsp;
+<p>
+    <a class="btn btn-secondary" asp-action="ListDepartments">Back to List</a>
+</p>
 

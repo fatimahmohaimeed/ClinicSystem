@@ -5,12 +5,10 @@
 }
 
 <h1>Admin Dashboard</h1>
-<p>
-    <a asp-action="ListDepartments">List Department</a> || <a asp-action="ListDoctors">List Doctor</a> || <a asp-action="AddAppointment">Add Appointment</a>
-</p>
+&nbsp;
 <table class="table">
     <thead>
-        <tr>
+        <tr class="table-dark table-active">
             <th>
                 @Html.DisplayNameFor(model => model.AppointmentDate)
             </th>
@@ -26,7 +24,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Patient)
             </th>
-            <th></th>
+            <th>
+                Action
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -48,9 +48,19 @@
                     @Html.DisplayFor(modelItem => item.Patient.Name)
                 </td>
             <td>
-                    <a asp-action="DeleteAppointment" asp-route-id="@item.AppointmentId">Delete</a>
+                    <a class="btn btn-dark"  asp-action="DeleteAppointment" asp-route-id="@item.AppointmentId">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+&nbsp;&nbsp;&nbsp;
+<p>
+    <a class="btn btn-secondary" asp-action="ListDepartments">List Department</a>&nbsp;
+    <a class="btn btn-secondary" asp-action="ListDoctors">List Doctor</a>&nbsp;
+    <a class="btn btn-secondary" asp-action="AddAppointment">Add Appointment</a>
+</p>
+
+<div class="img2">
+    <img src="~/images/background3.png" width="250" height="250" />
+</div>

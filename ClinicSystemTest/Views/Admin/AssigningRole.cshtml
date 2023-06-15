@@ -1,7 +1,7 @@
 ﻿@model UserRolesViewModel
 @{
     ViewData["Title"] = "Manage Role";
-}<h1>This is Manage Role Page</h1>
+}<h1>Manage Role Page</h1>
 <form method="post">
     <div class="card mt-4">
         <div class="card-header">
@@ -23,9 +23,9 @@
         </div>
         <div asp-validation-summary="All" class="text-danger"></div>
     </div>
-    <div class="card-footer">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    <div class="">
+        <button class="btn btn-info" type="submit" class="btn btn-primary">Save</button>&nbsp;
+        <a class="btn btn-dark" asp-action="GetRoles" class="btn btn-secondary">Cancel</a>
     </div>
 
 </form>

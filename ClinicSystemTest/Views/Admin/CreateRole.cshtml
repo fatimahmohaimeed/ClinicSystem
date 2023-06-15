@@ -13,13 +13,14 @@
                 <label asp-for="RoleName" class="control-label"></label>
                 <input asp-for="RoleName" class="text-danger" />
                 <span asp-validation-for="RoleName" class="text-danger"></span>
-            </div>
+            </div>&nbsp;
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-info" />
             </div>
         </form>
     </div>
 </div>
-<div>
-    <a asp-action="Index">Back to list</a>
-</div>
+&nbsp;
+<p>
+    <a class="btn btn-secondary" asp-action="GetRoles">Back to list</a>
+</p>

@@ -1,6 +1,7 @@
 ﻿using ClinicSystemTest.Data;
 using ClinicSystemTest.Entities;
 using ClinicSystemTest.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -21,13 +22,20 @@ namespace ClinicSystemTest.Controllers
             this.userManager = userManager;
             this.context = context;
         }
-
+        [Authorize]
         public IActionResult Index()
         {
             try
             {
-                var appointments = context.Appointments;
-                //var doctor = context.Doctors.();
+                var user = userManager.GetUserId(User);// if user login
+                var pationtLogIn = context.Patients.FirstOrDefault(a => a.PatientUserId == user);
+
+                if (pationtLogIn == null)
+                {
+                    return RedirectToAction("AddProfile");
+                }
+
+                var appointments = context.Appointments.Where(p => p.PatientId == null || p.PatientId == pationtLogIn.Id).ToList();//
 
                 List<ListAllAppointment> appointmentList = new List<ListAllAppointment>();
                 foreach (var apoin in appointments)
@@ -39,8 +47,9 @@ namespace ClinicSystemTest.Controllers
                         Time = apoin.AppointmentTime,
                         Price = apoin.AppointmentPrice,
                         DoctorId = apoin.DoctorId,
-                        //Name = context.Doctors.Where(d => d.Id == apoin.DoctorId).FirstOrDefault(n=>n.Name == doctor.Name),
-                        IsReserved = context.Patients.Any(a => a.Id == apoin.PatientId)
+                        Name = context.Doctors.FirstOrDefault(n => n.Id == apoin.DoctorId).Name,
+                        IsReserved = (apoin.PatientId == pationtLogIn.Id)
+
                     });
                 }
                 return View(appointmentList);

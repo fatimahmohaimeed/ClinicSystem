@@ -4,14 +4,12 @@
     ViewData["Title"] = "ListDepartments";
 }
 
-<h1>ListDepartments</h1>
+<h1>List Departments</h1>
 
-<p>
-    <a asp-action="CreateDepartment">Add Department</a>
-</p>
+&nbsp;
 <table class="table">
     <thead>
-        <tr>
+        <tr class="table-dark table-active">
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -28,4 +26,8 @@
 }
     </tbody>
 </table>
-<a asp-action="Index">Back to list</a>
+&nbsp;
+<p>
+    <a class="btn btn-info" asp-action="CreateDepartment">Add Department</a>&nbsp;
+    <a class="btn btn-dark" asp-action="Index">Back to list</a>&nbsp;
+</p>

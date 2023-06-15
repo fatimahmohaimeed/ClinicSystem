@@ -1,8 +1,39 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@using Microsoft.AspNetCore.Identity
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@*}
+    ViewData["Title"] = "Home Page";
+}*@
+
+<div class="body">
+    <div class="img1">
+        <img src="~/images/SystemLogo4.png" width="300" height="300" />
+    </div>
+
+    <div class="content">
+        <h1 class="display-4 fw-normal">Highly Qualified Clini</h1>
+        <div class="text">
+            <p class="lead fw-normal">From the year 2000 to this today.</p>
+        </div>
+
+            @if (SignInManager.IsSignedIn(User))
+            {
+            <a class="btn btn-outline-secondary" asp-controller="Patient" asp-action="Index">View Appointments</a>
+
+            }
+            else
+            {
+                <a class="btn btn-outline-secondary" id="register" asp-area="Identity" asp-page="/Account/Register">  Register  </a>
+
+            }
+
+        <div class="product-device shadow-sm d-none d-md-block"></div>
+        <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+    </div>
+
+    <div class="img2">
+        <img src="~/images/SystemLogo.png" width="250" height="250" />
+    </div>
 </div>

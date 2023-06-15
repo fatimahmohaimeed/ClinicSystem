@@ -211,7 +211,7 @@ namespace ClinicSystemTest.Controllers
         [HttpPost]
         public IActionResult CreateDepartment(Department department)
         {
-            try 
+            try
             {
                 context.Departments.Add(department);
                 context.SaveChanges();
@@ -225,7 +225,7 @@ namespace ClinicSystemTest.Controllers
         }
         #endregion
 
-        #region Add Doctor
+        #region Doctor
 
         [HttpGet]
         public IActionResult ListDoctors()
@@ -238,7 +238,7 @@ namespace ClinicSystemTest.Controllers
             return View(doctors);
         }
 
-
+        #region Add Doctor
         [HttpGet]
         //Add new doctor 
         public IActionResult AddDoctor()
@@ -303,6 +303,24 @@ namespace ClinicSystemTest.Controllers
                 return View(ex.Message.ToString());
             }
         }
+        #endregion
+        
+        #region Delete Doctor
+        public IActionResult DeleteDoctor(int id)
+        {
+            try
+            {
+                var doctor = context.Doctors.FirstOrDefault(a => a.Id == id);
+                context.Doctors.Remove(doctor);
+                context.SaveChanges();
+                return RedirectToAction("ListDoctors");
+            }
+            catch (Exception ex)
+            {
+                return View(ex.Message.ToString());
+            }
+        }
+        #endregion
 
         #endregion
 
@@ -400,7 +418,6 @@ namespace ClinicSystemTest.Controllers
         }
 
         #endregion
-
 
     }
 }

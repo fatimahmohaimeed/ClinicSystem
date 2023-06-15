@@ -4,14 +4,12 @@
     ViewData["Title"] = "ListDoctors";
 }
 
-<h1>ListDoctors</h1>
+<h1>List Doctors</h1>
 
-<p>
-    <a asp-action="AddDoctor">Add Doctor</a>
-</p>
+&nbsp;
 <table class="table">
     <thead>
-        <tr>
+        <tr class="table-dark table-active">
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -24,7 +22,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.DoctorUser)
             </th>
-            <th></th>
+            <th>
+                Action
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -42,13 +42,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.DoctorUser.Email)
             </td>
-@*            <td>
-                    <a asp-action="DoctorDetails" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="DoctorDelete" asp-route-id="@item.Id">Delete</a>
-            </td>*@
+            <td>
+                    <a class="btn btn-dark"  asp-action="DeleteDoctor" asp-route-id="@item.Id">Delete</a>
+            </td>
         </tr>
 }
     </tbody>
 </table>
-<a asp-action="Index">Back to List</a>
-
+&nbsp;
+<p>
+    <a class="btn btn-info" asp-action="AddDoctor">Add Doctor</a>&nbsp;
+    <a class="btn btn-dark" asp-action="Index">Back to List</a>&nbsp;
+</p>

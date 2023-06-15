@@ -1,20 +1,27 @@
-﻿using ClinicSystemTest.Models;
+﻿using ClinicSystemTest.Data;
+using ClinicSystemTest.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 
 namespace ClinicSystemTest.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly ILogger<HomeController> _logger;//
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, UserManager<IdentityUser> userManager)//
         {
             _logger = logger;
+            this.userManager = userManager;
         }
+
 
         public IActionResult Index()
         {
+
             return View();
         }
 

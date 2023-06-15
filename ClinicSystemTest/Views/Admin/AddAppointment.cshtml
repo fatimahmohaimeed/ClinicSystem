@@ -4,7 +4,7 @@
     ViewData["Title"] = "AddAppointment";
 }
 
-<h1>AddAppointment</h1>
+<h1>Add Appointment</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -16,26 +16,26 @@
                 <label asp-for="appointment.AppointmentDate" class="control-label"></label>
                 <input asp-for="appointment.AppointmentDate" class="form-control" />
                 <span asp-validation-for="appointment.AppointmentDate" class="text-danger"></span>
-            </div>
-
+            </div>&nbsp;
             <div class="form-group">
                 <label asp-for="appointment.AppointmentTime"></label>
                 <input asp-for="appointment.AppointmentTime" class="form-control"></input>
-            </div>
+            </div>&nbsp;
             <div class="form-group">
                 <label asp-for="appointment.AppointmentPrice"></label>
                 <input asp-for="appointment.AppointmentPrice" class="form-control"></input>
-            </div>
+            </div>&nbsp;
             <div class="form-group">
-                <label asp-for="appointment.DoctorId"></label>
+                <label asp-for="appointment.Doctor"></label>
                 <select asp-for="appointment.DoctorId" class="form-control" asp-items="@Model.Doctors"></select>
-            </div>
+            </div>&nbsp;
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-info" />
             </div>
         </form>
     </div>
 </div>
+&nbsp;
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-dark" asp-action="Index">Back to List</a>
 </div>
