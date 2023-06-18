@@ -1,0 +1,105 @@
+﻿@model IEnumerable<ClinicSystemTest.Models.ListAllAppointment>
+
+@{
+    ViewData["Title"] = "DoctorAppointments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    }
+
+
+
+    .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+    }
+
+    .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+    }
+
+    .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+    }
+
+    .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+    }
+
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+    h6 {
+        font-weight: bold;
+    }
+
+    h5 {
+        font-weight: bold;
+    }
+
+</style>
+<div>
+    <h1>
+        Appointments <img style="float: right; margin: 0 0 0 15px;" src="~/images/SystemLogo.png" width="200" height="200" />
+    </h1>
+</div>
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            @foreach (var item in Model)
+            {
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <p><h5>Doctor Name</h5>@Html.DisplayFor(modelItem => item.Name)</p>
+                        </div>
+                        <p><h6>Date:</h6>@Html.DisplayFor(modelItem => item.Data)</p>
+                        <p><h6>Time:</h6>@Html.DisplayFor(modelItem => item.Time)</p>
+                        <p><h6>Price:</h6>@Html.DisplayFor(modelItem => item.Price)</p>
+                        <p>
+                            <form method="post" asp-action="book" asp-route-id="@item.AppId" asp-route-isReserved="@item.IsReserved">
+                                @if (item.IsReserved)
+                                {
+                                    <input class="button" type="submit" value="Un Book" />
+                                }
+                                else
+                                {
+                                    <input class="button" type="submit" value="Book" />
+                                }
+                            </form>
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<p>
+    <a class="button" asp-action="ListDoctors">Back</a>
+</p>
+<div class="img2">
+    <img src="~/images/background3.png" width="250" height="250" />
+</div>F

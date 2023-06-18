@@ -22,43 +22,44 @@ namespace ClinicSystemTest.Controllers
             this.userManager = userManager;
             this.context = context;
         }
-        [Authorize]
-        public IActionResult Index()
-        {
-            try
-            {
-                var user = userManager.GetUserId(User);// if user login
-                var pationtLogIn = context.Patients.FirstOrDefault(a => a.PatientUserId == user);
 
-                if (pationtLogIn == null)
-                {
-                    return RedirectToAction("AddProfile");
-                }
+        //[Authorize]
+        //public IActionResult Index()
+        //{
+        //    try
+        //    {
+        //        var user = userManager.GetUserId(User);// if user login
+        //        var pationtLogIn = context.Patients.FirstOrDefault(a => a.PatientUserId == user);
 
-                var appointments = context.Appointments.Where(p => p.PatientId == null || p.PatientId == pationtLogIn.Id).ToList();//
+        //        if (pationtLogIn == null)
+        //        {
+        //            return RedirectToAction("AddProfile");
+        //        }
 
-                List<ListAllAppointment> appointmentList = new List<ListAllAppointment>();
-                foreach (var apoin in appointments)
-                {
-                    appointmentList.Add(new ListAllAppointment
-                    {
-                        AppId = apoin.AppointmentId,
-                        Data = apoin.AppointmentDate,
-                        Time = apoin.AppointmentTime,
-                        Price = apoin.AppointmentPrice,
-                        DoctorId = apoin.DoctorId,
-                        Name = context.Doctors.FirstOrDefault(n => n.Id == apoin.DoctorId).Name,
-                        IsReserved = (apoin.PatientId == pationtLogIn.Id)
+        //        var appointments = context.Appointments.Where(p => p.PatientId == null || p.PatientId == pationtLogIn.Id).ToList();//
 
-                    });
-                }
-                return View(appointmentList);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+        //        List<ListAllAppointment> appointmentList = new List<ListAllAppointment>();
+        //        foreach (var apoin in appointments)
+        //        {
+        //            appointmentList.Add(new ListAllAppointment
+        //            {
+        //                AppId = apoin.AppointmentId,
+        //                Data = apoin.AppointmentDate,
+        //                Time = apoin.AppointmentTime,
+        //                Price = apoin.AppointmentPrice,
+        //                DoctorId = apoin.DoctorId,
+        //                Name = context.Doctors.FirstOrDefault(n => n.Id == apoin.DoctorId).Name,
+        //                IsReserved = (apoin.PatientId == pationtLogIn.Id)
+
+        //            });
+        //        }
+        //        return View(appointmentList);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
 
 
 
@@ -78,7 +79,7 @@ namespace ClinicSystemTest.Controllers
                 var appointment = context.Appointments.FirstOrDefault(a => a.AppointmentId == id);
                 var appointments = context.Appointments
                     .Where(a => a.DoctorId == appointment.DoctorId)
-                    .Where(d => d.AppointmentTime == appointment.AppointmentTime)
+                    .Where(d => d.AppointmentDate == appointment.AppointmentDate)
                     .Where(p => p.PatientId == pation1.Id).ToList();
 
                 if (isReserved == false)// add appointment
@@ -103,8 +104,9 @@ namespace ClinicSystemTest.Controllers
                     appointm.PatientId = null;
                     context.SaveChanges();
                 }
+                var app = context.Appointments.Where(a => a.AppointmentId == id).FirstOrDefault();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("DoctorAppointments", new { id = app.DoctorId});
             }
             
             catch (Exception ex)
@@ -155,7 +157,7 @@ namespace ClinicSystemTest.Controllers
                     };
                     context.Patients.Add(patient);
                     context.SaveChanges();
-                    return RedirectToAction("Index", "Patient");
+                    return RedirectToAction("ListDoctors", "Patient");
                 }
             }
             catch (Exception ex)
@@ -167,6 +169,61 @@ namespace ClinicSystemTest.Controllers
         }
 
         #endregion
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult ListDoctors()
+        {
+            var doctors = context.Doctors
+                .Include(d => d.Department)
+                .Include(u => u.DoctorUser)
+                .ToList();
+
+            return View(doctors);
+        }
+
+        public IActionResult DoctorAppointments(int id)
+        {
+            try
+            {
+
+                var user = userManager.GetUserId(User);// if user login
+                var pationtLogIn = context.Patients.FirstOrDefault(a => a.PatientUserId == user);
+
+                if (pationtLogIn == null)
+                {
+                    return RedirectToAction("AddProfile");
+                }
+
+                var appointments = context.Appointments.Where(p => p.PatientId == null || p.PatientId == pationtLogIn.Id).Where(d => d.DoctorId == id).ToList();//
+
+                List<ListAllAppointment> appointmentList = new List<ListAllAppointment>();
+                foreach (var apoin in appointments)
+                {
+                    appointmentList.Add(new ListAllAppointment
+                    {
+                        AppId = apoin.AppointmentId,
+                        Data = apoin.AppointmentDate,
+                        Time = apoin.AppointmentTime,
+                        Price = apoin.AppointmentPrice,
+                        DoctorId = apoin.DoctorId,
+                        Name = context.Doctors.FirstOrDefault(n => n.Id == apoin.DoctorId).Name,
+                        IsReserved = (apoin.PatientId == pationtLogIn.Id)
+
+                    });
+                }
+                return View(appointmentList);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+
+
+
 
     }
 }
