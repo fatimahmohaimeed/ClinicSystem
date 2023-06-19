@@ -11,12 +11,13 @@
 - Patient
 _______________________
 #### If the user is an Admin:
-1. Create a new role and list all roles and assign a role to the user
+1. Create a new role and list all roles and assign/ remove a role to the user
 2. Create a new department
 3. Create a new doctor
 4. Create a new appointment
 5. List departments & list doctors & list appointments
 6. Delete the appointment
+7. Delete the doctor
 
 _______________________
 #### If the user is Doctor:
